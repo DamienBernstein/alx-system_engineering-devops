@@ -1,4 +1,2 @@
 #!/bin/bash
 ln -s /bin/ls __ls__
-[master db16646] Task13.We are symbols,and we inhabit symbols
- 1 file changed, 1 insertion(+), 1 deletion(-)
