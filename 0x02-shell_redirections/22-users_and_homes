@@ -1,2 +1,2 @@
 #!/bin/bash
-/etc/passwd | cut -f1,3,6 -d:
+/etc/passwd | cut -f1,3,6 -d: | grep '[0-9][0-9][0-9]:[a-z]+:/[a-z]+/[a-z]+/[a-z]+'
