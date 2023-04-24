@@ -1,20 +1,24 @@
-import requests
-import sys
+#!/usr/bin/python3
+"""
+Uses the JSON placeholder api to query data about an employee
+"""
 
-employee_id = sys.argv[1]
+from requests import get
+from sys import argv
 
-response = requests.get(f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}")
+if __name__ == '__main__':
+    main_url = 'https://jsonplaceholder.typicode.com'
+    todo_url = main_url + "/user/{}/todos".format(argv[1])
+    name_url = main_url + "/users/{}".format(argv[1])
+    todo_result = get(todo_url).json()
+    name_result = get(name_url).json()
 
-if response.status_code == 200:
-    tasks = response.json()
-    num_tasks = len(tasks)
-    num_completed_tasks = sum(task['completed'] for task in tasks)
-    employee_name = tasks[0]['username']
-    
-    print(f"Employee {employee_name} is done with tasks({num_completed_tasks}/{num_tasks}):")
-    
-    for task in tasks:
-        if task['completed']:
-            print(f"\t {task['title']}")
-else:
-    print("Error occurred while fetching TODO list for employee")
+    todo_num = len(todo_result)
+    todo_complete = len([todo for todo in todo_result
+                         if todo.get("completed")])
+    name = name_result.get("name")
+    print("Employee {} is done with tasks({}/{}):"
+          .format(name, todo_complete, todo_num))
+    for todo in todo_result:
+        if (todo.get("completed")):
+            print("\t {}".format(todo.get("title")))
